@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect  } from 'react';
 import { 
   Home, User, Users, MessageSquare, Video, ShoppingBag, Settings, Moon, Sun,
   MapPin, Calendar, Mail, ExternalLink, Edit3, Save, X, Plus, Trash2, Star
@@ -9,71 +9,68 @@ const ProfilePage = () => {
   const [showAddExperience, setShowAddExperience] = useState(false);
   const [showAddSkill, setShowAddSkill] = useState(false);
   const [showAddProject, setShowAddProject] = useState(false);
-  const [userData, setUserData] = useState({
-      name: "Alex Johnson",
-      title: "Senior Full Stack Developer",
-      location: "San Francisco, CA",
-      email: "alex.johnson@email.com",
-      website: "alexjohnson.dev",
-      joinDate: "March 2022",
-      avatar: "/api/placeholder/80/80",
+  const defaultUser = {
+      fullName: "",
+      currentPosition: "",
+      location: "",
+      email: "",
+      website: "",
+      joinDate: "",
+      avatar: "",
       stats: {
-        connections: 342,
-        profileViews: "1.2K",
-        responseRate: "95%"
+        connections: 0,
+        profileViews: "0",
+        responseRate: "0%",
       },
-      skills: ["React", "Node.js", "TypeScript", "Python", "AWS"],
-      bio: "Passionate full-stack developer with 8+ years of experience building scalable web applications. Specialized in React, Node.js, and cloud architecture. Love mentoring junior developers and contributing to open-source projects. Always excited about new technologies and best practices.",
-      experience: [
-        {
-          id: 1,
-          title: "Senior Frontend Developer",
-          company: "TechCorp Inc",
-          duration: "2022 - Present",
-          location: "San Francisco, CA",
-          type: "Full-time",
-          description: "Leading frontend development for enterprise applications using React, TypeScript, and modern web technologies.",
-          technologies: ["React", "TypeScript", "GraphQL", "AWS"]
-        },
-        {
-          id: 2,
-          title: "Frontend Developer",
-          company: "StartupXYZ",
-          duration: "2020 - 2022",
-          location: "Remote",
-          type: "Full-time",
-          description: "Built responsive web applications and collaborated with design teams to create exceptional user experiences.",
-          technologies: ["React", "JavaScript", "Node.js", "MongoDB"]
+      skills: [],
+      bio: "",
+      experience: [],
+      projects: [],
+    };
+// {"id":"68d2f8608b0e2076e95c5fc9","fullName":"Soham Lohote","email":"sohamlohote123@gmail.com","currentPosition":"Backend Developer","location":"Mumbai","additionalEmail":"sohamlohote@gmail.com","website":"mahos.vercel.app","bio":"Im passionate coder","skills":["React","JavaScript"],"experience":[{"jobTitle":"Intership","company":"AICTE","duration":"2024-2025","location":"Remote","description":"APC","technologies":["React"]}],"projects":[{"projectName":"Project1","description":"completing","status":"Completed","technologies":["React","JavaScript"]}]}
+
+
+  const [userData, setUserData] = useState(defaultUser);
+  const [tempBio, setTempBio] = useState("");
+
+   useEffect(() => {
+      const stored = localStorage.getItem("user");
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          // merge with defaults to avoid undefined
+          setUserData({ ...defaultUser, ...parsed });
+        } catch (e) {
+          console.error("Invalid JSON in localStorage:", e);
         }
-      ],
-      projects: [
-        {
-          id: 1,
-          name: "E-Commerce Platform",
-          description: "Full-stack e-commerce solution with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and admin dashboard.",
-          status: "Completed",
-          rating: 4.9,
-          technologies: ["React", "Node.js", "PostgreSQL", "Stripe"]
-        },
-        {
-          id: 2,
-          name: "Task Management App",
-          description: "Collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-          status: "In Progress",
-          rating: 4.8,
-          technologies: ["React", "TypeScript", "Socket.io", "MongoDB"]
-        }
-      ]
-    });
-  
-    const [tempBio, setTempBio] = useState(userData.bio);
-    const [newExperience, setNewExperience] = useState({
-      title: '', company: '', duration: '', location: '', type: 'Full-time', description: '', technologies: []
-    });
-    const [newSkill, setNewSkill] = useState('');
-    const [newProject, setNewProject] = useState({
-      name: '', description: '', status: 'In Progress', technologies: []
-    });
+      }
+    }, []);
+    useEffect(() => {
+      setTempBio(userData.bio || "");
+    }, [userData.bio]);
+
+    // ✅ Example bio save
+    // const handleBioSave = () => {
+    //   const updated = { ...userData, bio: tempBio };
+    //   setUserData(updated);
+    //   localStorage.setItem("user", JSON.stringify(updated));
+    // };
+
+    // useEffect(() => {
+    //     const storedUser = localStorage.getItem("user");
+    //     console.log(storedUser)
+    //     if (storedUser) {
+    //       setUserData(JSON.parse(storedUser));
+    //     }
+    //   }, []);
+    // const [tempBio, setTempBio] = useState(userData.bio);
+    // const [newExperience, setNewExperience] = useState({
+    //   title: '', company: '', duration: '', location: '', type: 'Full-time', description: '', technologies: []
+    // });
+    // const [newSkill, setNewSkill] = useState('');
+    // const [newProject, setNewProject] = useState({
+    //   name: '', description: '', status: 'In Progress', technologies: []
+    // });
 
 
      // CRUD Operations (Backend API calls would go here)
@@ -159,12 +156,12 @@ const ProfilePage = () => {
           <div className="flex items-center space-x-6">
             <img
               src={userData.avatar}
-              alt={userData.name}
+              alt={userData.fullNameame}
               className="w-20 h-20 rounded-full border-2 border-green-500"
             />
             <div>
-              <h1 className="text-3xl font-bold text-white mb-2">{userData.name}</h1>
-              <p className="text-xl text-gray-300 mb-2">{userData.title}</p>
+              <h1 className="text-3xl font-bold text-white mb-2">{userData.fullName}</h1>
+              <p className="text-xl text-gray-300 mb-2">{userData.currentPosition}</p>
               <div className="flex items-center text-gray-400 text-sm space-x-4">
                 <div className="flex items-center space-x-1">
                   <MapPin className="w-4 h-4" />
@@ -342,7 +339,7 @@ const ProfilePage = () => {
                 <div key={exp.id} className="border-b border-gray-800 pb-6 last:border-b-0">
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <h3 className="text-lg font-semibold text-white">{exp.title}</h3>
+                      <h3 className="text-lg font-semibold text-white">{exp.jobTitle}</h3>
                       <p className="text-green-500 font-medium">{exp.company}</p>
                     </div>
                     <button
@@ -500,7 +497,7 @@ const ProfilePage = () => {
               {userData.projects.map((project) => (
                 <div key={project.id} className="border-b border-gray-800 pb-4 last:border-b-0">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-white">{project.name}</h3>
+                    <h3 className="font-semibold text-white">{project.projectName}</h3>
                     <button
                       onClick={() => deleteProject(project.id)}
                       className="text-gray-400 hover:text-red-500 transition-colors"

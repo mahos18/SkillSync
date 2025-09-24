@@ -75,4 +75,63 @@ const loginController = async (req, res) => {
   }
 };
 
-module.exports = { signupController,loginController };
+
+
+const updateProfileController = async (req, res) => {
+  try {
+    const userId = req.user.id; // assuming middleware sets req.user from JWT
+    const {
+      currentPosition,
+      location,
+      additionalEmail,
+      website,
+      bio,
+      skills,
+      experience,
+      projects
+    } = req.body;
+
+    // Find the user
+    const user = await UserModel.findById(userId);
+    if (!user) return res.status(404).json({ success: false, msg: "User not found" });
+
+    // Update fields
+    user.currentPosition = currentPosition || user.currentPosition;
+    user.location = location || user.location;
+    user.additionalEmail = additionalEmail || user.additionalEmail;
+    user.website = website || user.website;
+    user.bio = bio || user.bio;
+    user.skills = skills || user.skills;
+    user.experience = experience || user.experience;
+    user.projects = projects || user.projects;
+
+    // Save
+    await user.save();
+
+    res.json({
+      success: true,
+      msg: "Profile updated successfully",
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        currentPosition: user.currentPosition,
+        location: user.location,
+        additionalEmail: user.additionalEmail,
+        website: user.website,
+        bio: user.bio,
+        skills: user.skills,
+        experience: user.experience,
+        projects: user.projects
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, msg: "Server error", error: err.message });
+  }
+};
+
+
+
+
+module.exports = { signupController,loginController,updateProfileController };

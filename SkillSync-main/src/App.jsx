@@ -9,12 +9,13 @@ import AuthPages from './Pages/AuthPage/AuthPages'
 import Dashboard from './Pages/DashBoard/DashBoard'
 import { Toaster } from 'react-hot-toast';
 import RefreshHandler from './utils/RefreshHandler'
+import OnboardingFlow from './Pages/AuthPage/Onboardingflow'
 
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const PrivateRoute=({element}) => {
-    return isAuthenticated ? element : <Navigate to="/login" />;
+    return isAuthenticated ? element : <Navigate to="/" />;
   }
 
   return (
@@ -22,9 +23,11 @@ function App() {
       <>
         <RefreshHandler setIsAuthenticated={setIsAuthenticated}/>
         <Routes>
+
         <Route path="/" element={<LandingPage />} />
-        <Route path="/dash" element={<PrivateRoute element={<Dashboard/>}/>} />
         <Route path="/auth" element={<AuthPages />} />
+        <Route path="/onboard" element={<OnboardingFlow />} />
+        <Route path="/dash" element={<PrivateRoute element={<Dashboard/>}/>} />
       </Routes>
       <Toaster />
         

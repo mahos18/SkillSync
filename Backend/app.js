@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const app = express();
 const authRouter = require('./routes/authRouter');
+const dashRouter = require('./routes/dashRouter');
 
 const PORT = process.env.PORT || 8080;
 app.use(cors());
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRouter);
+app.use('/dash', dashRouter);
 
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);

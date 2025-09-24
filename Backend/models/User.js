@@ -30,7 +30,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
 
   // Profile Info
-  currentPosition: { type: String },
+  currentPosition: { type: String  },
   location: { type: String },
   additionalEmail: { type: String },
   website: { type: String },

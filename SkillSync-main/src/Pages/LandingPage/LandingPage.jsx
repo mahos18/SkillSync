@@ -18,7 +18,7 @@ const LandingPage = () => {
         </div>
         <div className="flex space-x-4">
           <button className="text-white hover:text-green-500 transition-colors cursor-pointer" onClick={toAuthPage} >Login</button>
-          <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg font-medium transition-colors">
+          <button className="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg font-medium transition-colors" onClick={toAuthPage}>
             Sign Up
           </button>
         </div>

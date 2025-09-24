@@ -96,7 +96,8 @@ const AuthPages = () => {
       if (res.data.user) localStorage.setItem("user", JSON.stringify(res.data.user));
       
       handleSuccess("Signup successful!");
-      navigate("/dash");
+      handleSuccess("Please Complete your Profile");
+      navigate("/onboard");
     } catch (err) {
       console.error(err?.response?.data || err.message);
       handleError(err?.response?.data?.message || "Signup failed");

@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import ProfilePage from './components/ProfilePage';
 import Feed from '../Feed/Feed';
+import ConnectionsPage from './components/connectionsPage';
 
 
 const Dashboard = () => {
@@ -79,12 +80,7 @@ const Dashboard = () => {
         <div className="flex-1 overflow-y-auto">
         {activeTab === 'Profile' && <ProfilePage />}
         {activeTab === 'Home' && <Feed />}
-        {activeTab === 'Connections' && (
-            <div className="p-6">
-            <h1 className="text-3xl font-bold text-white mb-4">Connections</h1>
-            <p className="text-gray-300">Manage your professional connections here.</p>
-            </div>
-        )}
+        {activeTab === 'Connections' && <ConnectionsPage/>}
         {activeTab === 'Messages' && (
             <div className="p-6">
             <h1 className="text-3xl font-bold text-white mb-4">Messages</h1>
