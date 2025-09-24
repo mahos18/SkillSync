@@ -42,7 +42,11 @@ const userSchema = new Schema({
   // Experience, Skills, Projects
   experience: [experienceSchema],
   skills: [{ type: String }],
-  projects: [projectSchema]
+  projects: [projectSchema],
+  isOnboarded: {
+    type: Boolean,
+    default: false,
+  },
 
 }, { timestamps: true });
 

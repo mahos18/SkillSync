@@ -17,6 +17,12 @@ app.get('/', (req, res) => {
 app.use('/auth', authRouter);
 app.use('/dash', dashRouter);
 
+
+
+
+
+
+
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
 });

@@ -66,9 +66,18 @@ const loginController = async (req, res) => {
       token,
       user: {
         id: user._id,
-        name: user.name,
+        fullName: user.fullName,
         email: user.email,
-      },
+        currentPosition: user.currentPosition,
+        location: user.location,
+        additionalEmail: user.additionalEmail,
+        website: user.website,
+        bio: user.bio,
+        skills: user.skills,
+        experience: user.experience,
+        projects: user.projects,
+        isOnboarded: user.isOnboarded
+      }
     });
   } catch (err) {
     res.status(500).json({ success: false, msg: "Server error", error: err.message });
@@ -104,6 +113,7 @@ const updateProfileController = async (req, res) => {
     user.skills = skills || user.skills;
     user.experience = experience || user.experience;
     user.projects = projects || user.projects;
+    user.isOnboarded = true;
 
     // Save
     await user.save();
@@ -122,7 +132,8 @@ const updateProfileController = async (req, res) => {
         bio: user.bio,
         skills: user.skills,
         experience: user.experience,
-        projects: user.projects
+        projects: user.projects,
+        isOnboarded: user.isOnboarded
       }
     });
   } catch (err) {
