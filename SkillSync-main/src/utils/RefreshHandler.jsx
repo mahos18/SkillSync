@@ -18,7 +18,7 @@ function RefreshHandler({ setIsAuthenticated }) {
       }
 
       // If user is onboarded but stuck on root/auth, send to dashboard
-      if (user.isOnboarded && (location.pathname === "/" || location.pathname === "/auth")) {
+      if (user.isOnboarded && (location.pathname === "/" || location.pathname === "/auth" || location.pathname === "/onboard")) {
         navigate("/dash", { replace: true });
       }
     } else {

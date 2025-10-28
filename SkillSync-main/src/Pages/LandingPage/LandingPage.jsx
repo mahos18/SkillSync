@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Users, Eye, TrendingUp, Shield, Globe, BarChart3, CheckCircle, Bot, Zap } from 'lucide-react';
+import { ArrowRight, Users, Eye, TrendingUp,  CheckCircle,  Zap,MapPin,Video,Bot,BarChart3,Shield,Globe } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
@@ -37,7 +37,7 @@ const LandingPage = () => {
             </h1>
             
             <p className="text-gray-300 text-lg mb-8 max-w-md">
-              Join the next generation of professional networking with immersive 3D skill visualization, real-time collaboration, and AI-powered connections.
+              Join a community where professionals meet, collaborate, and thrive. Discover opportunities around you, connect with nearby experts, and take your career to the next level.
             </p>
 
             <div className="flex space-x-4 mb-12">
@@ -60,10 +60,10 @@ const LandingPage = () => {
               </div>
               <div>
                 <div className="text-3xl font-bold text-green-500">500+</div>
-                <div className="text-sm text-gray-400">Skills Tracked</div>
+                <div className="text-sm text-gray-400">Skills Matched</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-green-500">95%</div>
+                <div className="text-3xl font-bold text-green-500">85%</div>
                 <div className="text-sm text-gray-400">Success Rate</div>
               </div>
             </div>
@@ -105,83 +105,84 @@ const LandingPage = () => {
 
       {/* Why Choose SkillSync */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">
-            Why Choose <span className="text-green-500">SkillSync</span>?
-          </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            Experience the future of professional networking with cutting-edge technology and intuitive design that puts your career growth first.
-          </p>
-        </div>
+  <div className="text-center mb-16">
+    <h2 className="text-4xl font-bold mb-4">
+      Why Choose <span className="text-green-500">SkillSync</span>?
+    </h2>
+    <p className="text-gray-300 max-w-2xl mx-auto">
+      Experience the future of professional networking with cutting-edge technology and intuitive design that puts your career growth first.
+    </p>
+  </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* AI-Powered Matching */}
-          <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
-            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
-              <Bot className="w-6 h-6 text-green-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">AI-Powered Matching</h3>
-            <p className="text-gray-300">
-              Smart algorithms connect you with the right professionals based on skills and goals.
-            </p>
-          </div>
+  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {/* Nearby Connect */}
+    <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+      <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+        <MapPin className="w-6 h-6 text-green-500" />
+      </div>
+      <h3 className="text-xl font-bold mb-3">Nearby Connect</h3>
+      <p className="text-gray-300">
+        Find and connect with professionals in your vicinity for instant collaboration.
+      </p>
+    </div>
 
-          {/* 3D Skill Visualization */}
-          <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
-            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
-              <Eye className="w-6 h-6 text-green-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">3D Skill Visualization</h3>
-            <p className="text-gray-300">
-              Interactive 3D graphs showcase your expertise and professional network connections.
-            </p>
-          </div>
+    {/* Mock Interviews */}
+    <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+      <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+        <Video className="w-6 h-6 text-green-500" />
+      </div>
+      <h3 className="text-xl font-bold mb-3">Mock Interviews</h3>
+      <p className="text-gray-300">
+        Practice technical and behavioral interviews with real-time feedback.
+      </p>
+    </div>
 
-          {/* Real-time Collaboration */}
-          <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
-            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
-              <Zap className="w-6 h-6 text-green-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Real-time Collaboration</h3>
-            <p className="text-gray-300">
-              Seamless project collaboration with integrated messaging and file sharing.
-            </p>
-          </div>
+    {/* AI-Powered Matching */}
+    <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+      <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+        <Bot className="w-6 h-6 text-green-500" />
+      </div>
+      <h3 className="text-xl font-bold mb-3">AI-Powered Matching</h3>
+      <p className="text-gray-300">
+        Smart algorithms connect you with the right professionals based on skills and goals.
+      </p>
+    </div>
 
-          {/* Privacy First */}
-          <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
-            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
-              <Shield className="w-6 h-6 text-green-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Privacy First</h3>
-            <p className="text-gray-300">
-              Your data is protected with enterprise-grade security and privacy controls.
-            </p>
-          </div>
+    {/* Skill Tracking */}
+    <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+      <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+        <BarChart3 className="w-6 h-6 text-green-500" />
+      </div>
+      <h3 className="text-xl font-bold mb-3">Skill Tracking</h3>
+      <p className="text-gray-300">
+        Monitor your skill growth and visualize your career trajectory over time.
+      </p>
+    </div>
 
-          {/* Global Network */}
-          <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
-            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
-              <Globe className="w-6 h-6 text-green-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Global Network</h3>
-            <p className="text-gray-300">
-              Connect with professionals worldwide and expand your international presence.
-            </p>
-          </div>
+    {/* Privacy & Security */}
+    <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+      <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+        <Shield className="w-6 h-6 text-green-500" />
+      </div>
+      <h3 className="text-xl font-bold mb-3">Privacy & Security</h3>
+      <p className="text-gray-300">
+        Your personal and professional data is secured with enterprise-grade protocols.
+      </p>
+    </div>
 
-          {/* Career Growth */}
-          <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
-            <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
-              <BarChart3 className="w-6 h-6 text-green-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-3">Career Growth</h3>
-            <p className="text-gray-300">
-              Track your progress and discover new opportunities for professional development.
-            </p>
-          </div>
-        </div>
-      </section>
+    {/* Career Opportunities */}
+    <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-800">
+      <div className="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4">
+        <Globe className="w-6 h-6 text-green-500" />
+      </div>
+      <h3 className="text-xl font-bold mb-3">Career Opportunities</h3>
+      <p className="text-gray-300">
+        Discover new job roles, internships, and collaborations within the global network.
+      </p>
+    </div>
+  </div>
+</section>
+
 
       {/* CTA Section */}
       <section className="max-w-7xl mx-auto px-6 py-20 text-center">

@@ -3,7 +3,8 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
 dotenv.config();
-const UserModel = require("../models/User"); // your User schema file
+const UserModel = require("../models/User");
+const Location = require("../models/Location") // your User schema file
 
 // Signup Controller
 const signupController = async (req, res) => {
@@ -23,7 +24,8 @@ const signupController = async (req, res) => {
     const newUser = new UserModel({
       fullName,
       email,
-      password: hashedPassword,
+      password: hashedPassword
+      
     });
 
     await newUser.save();
@@ -36,7 +38,8 @@ const signupController = async (req, res) => {
       user: {
         id: newUser._id,
         fullName: newUser.fullName,
-        email: newUser.email
+        email: newUser.email,
+        isOnboarded:newUser.isOnboarded,
       }
     });
 
@@ -86,9 +89,80 @@ const loginController = async (req, res) => {
 
 
 
+// const updateProfileController = async (req, res) => {
+//   try {
+//     const userId = req.user.id; // assuming middleware sets req.user from JWT
+//     const {
+//       currentPosition,
+//       location,
+//       additionalEmail,
+//       website,
+//       bio,
+//       skills,
+//       experience,
+//       projects
+//     } = req.body;
+//     const { latitude, longitude } = req.body;
+
+//     // Find the user
+//     const user = await UserModel.findById(userId);
+//     if (!user) return res.status(404).json({ success: false, msg: "User not found" });
+
+//     await Location.findOneAndUpdate(
+//       { user: userId },
+//       { location: { type: "Point", coordinates: [longitude, latitude] }, updatedAt: Date.now() },
+//       { upsert: true, new: true }
+//     );
+
+//     // Update fields
+//     user.currentPosition = currentPosition || user.currentPosition;
+//     user.location = location || user.location;
+//     user.additionalEmail = additionalEmail || user.additionalEmail;
+//     user.website = website || user.website;
+//     user.bio = bio || user.bio;
+//     user.skills = skills || user.skills;
+//     user.experience = experience || user.experience;
+//     user.projects = projects || user.projects;
+//     user.isOnboarded = true;
+
+//     // Save
+//     await user.save();
+
+//     res.json({
+//       success: true,
+//       msg: "Profile updated successfully",
+//       user: {
+//         id: user._id,
+//         fullName: user.fullName,
+//         email: user.email,
+//         currentPosition: user.currentPosition,
+//         location: user.location,
+//         additionalEmail: user.additionalEmail,
+//         website: user.website,
+//         bio: user.bio,
+//         skills: user.skills,
+//         experience: user.experience,
+//         projects: user.projects,
+//         isOnboarded: user.isOnboarded
+//       }
+//     });
+//   } catch (err) {
+//     if (err.name === "ValidationError") {
+//       const messages = Object.values(error.errors).map(err => err.message);
+//       return res.status(400).json({
+//         success: false,
+//         message: "Please fill all required fields",
+//         details: messages
+//       });
+//     }
+//     console.error(err);
+//     res.status(500).json({ success: false, msg: "Server error", error: err.message });
+//   }
+// };
+
 const updateProfileController = async (req, res) => {
   try {
-    const userId = req.user.id; // assuming middleware sets req.user from JWT
+    const userId = req.user.id;
     const {
       currentPosition,
       location,
@@ -97,14 +171,35 @@ const updateProfileController = async (req, res) => {
       bio,
       skills,
       experience,
-      projects
+      projects,
+      latitude,
+      longitude
     } = req.body;
 
-    // Find the user
     const user = await UserModel.findById(userId);
-    if (!user) return res.status(404).json({ success: false, msg: "User not found" });
+    if (!user)
+      return res.status(404).json({ success: false, msg: "User not found" });
 
-    // Update fields
+    // ✅ FIX: Validate coordinates before saving
+    if (
+      typeof latitude === "number" &&
+      typeof longitude === "number" &&
+      !isNaN(latitude) &&
+      !isNaN(longitude)
+    ) {
+      await Location.findOneAndUpdate(
+        { user: userId },
+        {
+          location: { type: "Point", coordinates: [latitude,longitude ] },
+          updatedAt: Date.now(),
+        },
+        { upsert: true, new: true }
+      );
+    } else {
+      console.warn("Skipping geo update — invalid coordinates:", latitude, longitude);
+    }
+
+    // Update remaining fields
     user.currentPosition = currentPosition || user.currentPosition;
     user.location = location || user.location;
     user.additionalEmail = additionalEmail || user.additionalEmail;
@@ -115,7 +210,6 @@ const updateProfileController = async (req, res) => {
     user.projects = projects || user.projects;
     user.isOnboarded = true;
 
-    // Save
     await user.save();
 
     res.json({
@@ -133,14 +227,23 @@ const updateProfileController = async (req, res) => {
         skills: user.skills,
         experience: user.experience,
         projects: user.projects,
-        isOnboarded: user.isOnboarded
-      }
+        isOnboarded: user.isOnboarded,
+      },
     });
   } catch (err) {
+    if (err.name === "ValidationError") {
+      const messages = Object.values(err.errors).map(e => e.message);
+      return res.status(400).json({
+        success: false,
+        message: "Please fill all required fields",
+        details: messages,
+      });
+    }
     console.error(err);
     res.status(500).json({ success: false, msg: "Server error", error: err.message });
   }
 };
+
 
 
 

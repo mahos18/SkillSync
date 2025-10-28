@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #000000; /* Dark background for the track */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #030712; /* Gradient thumb */
+  border-radius: 80px;
+  border: 0.5px solid rgb(70, 69, 69); /* Padding effect around thumb */
+  transition: background 0.3s ease;
+}
+
+
+/* Firefox */
+/* * {
+  scrollbar-width: thin;
+  scrollbar-color: #030712 #000000; 
+} */

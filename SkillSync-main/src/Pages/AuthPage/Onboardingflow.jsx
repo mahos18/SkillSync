@@ -5,7 +5,7 @@ import {
   Code, FolderOpen, CheckCircle 
 } from 'lucide-react';
 import axios from 'axios';
-import { handleSuccess } from '../../utils/Toaster';
+import { handleError, handleSuccess } from '../../utils/Toaster';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 const OnboardingFlow = () => {
@@ -174,6 +174,7 @@ const OnboardingFlow = () => {
 
   const handleSubmit = async () => {
     // Clean up empty strings from arrays
+    await sendCurrentLocationToServer();
     const cleanedData = {
       ...formData,
       skills: formData.skills.filter(skill => skill.trim() !== ''),
@@ -207,16 +208,92 @@ const OnboardingFlow = () => {
         if (res.data.success) {
         console.log("Profile updated:", res.data.user);
         
+        
         localStorage.setItem("user", JSON.stringify(res.data.user));
         handleSuccess('Onboarding completed! Redirecting to dashboard');
-        navigate("/dash");
+        // navigate("/dash");
         }
     } catch (err) {
-        console.error(err?.response?.data || err.message);
+      const msg =err.response?.data?.message ||"Something went wrong. Please try again.";
+      handleError(msg)
+        console.error( err.message);
     }
     
 
   };
+
+
+  // getAndSendLocation.js (can be inline inside component)
+  async function sendCurrentLocationToServer() {
+    // 1. quick check
+    if (!("geolocation" in navigator)) {
+      handleError("Geolocation not supported by this browser.");
+      return;
+    }
+
+    // 2. get permission & position (wrapped as Promise for async/await)
+    const getPosition = () =>
+      new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => resolve(pos),
+          (err) => reject(err),
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 60 * 1000, // 1 minute
+          }
+        );
+      });
+
+    try {
+      const position = await getPosition();
+      const { latitude, longitude } = position.coords;
+
+      // 3. prepare payload
+      const payload = { latitude, longitude };
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        handleError("Not authenticated. Please log in.");
+        return;
+      }
+
+      // 4. send to backend (adjust URL to match your server)
+      const res = await axios.put(
+        "http://localhost:8080/auth/onboard", // or your chosen endpoint
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (res.data?.success) {
+        handleSuccess("Location shared — onboarding continues!");
+        // optionally update user in localStorage: localStorage.setItem('user', JSON.stringify(res.data.user));
+      } else {
+        handleError(res.data?.message || "Failed to save location");
+      }
+    } catch (err) {
+      // 5. handle permission denial / errors
+      if (err && err.code === 1) {
+        // PERMISSION_DENIED
+        handleError("Location permission denied. Allow location to use Nearby Connect.");
+      } else if (err && err.code === 2) {
+        handleError("Position unavailable. Try again.");
+      } else if (err && err.code === 3) {
+        handleError("Location request timed out. Try again.");
+      } else {
+        handleError(err?.response?.data?.message || err?.message || "Unknown error");
+      }
+      console.error("Geolocation/send error:", err);
+    }
+  }
+
+
+
+
 
   const renderBasicInfo = () => (
     <div className="space-y-6">
@@ -558,6 +635,7 @@ const OnboardingFlow = () => {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      
       <div className="w-full max-w-4xl">
         {/* Progress Header */}
         <div className="mb-8">
@@ -602,10 +680,18 @@ const OnboardingFlow = () => {
 
         {/* Form Content */}
         <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-8">
-          {currentStep === 0 && renderBasicInfo()}
+          {/* {currentStep === 0 && renderBasicInfo()}
           {currentStep === 1 && renderSkills()}
           {currentStep === 2 && renderExperience()}
-          {currentStep === 3 && renderProjects()}
+          {currentStep === 3 && renderProjects()} */}
+          {currentStep < steps.length ? (
+            <>
+              {currentStep === 0 && renderBasicInfo()}
+              {currentStep === 1 && renderSkills()}
+              {currentStep === 2 && renderExperience()}
+              {currentStep === 3 && renderProjects()}
+            </>
+          ) : <div>Invalid step</div>}
 
           {/* Navigation Buttons */}
           <div className="flex justify-between mt-8 pt-6 border-t border-gray-800">

@@ -9,6 +9,15 @@ const ProfilePage = () => {
   const [showAddExperience, setShowAddExperience] = useState(false);
   const [showAddSkill, setShowAddSkill] = useState(false);
   const [showAddProject, setShowAddProject] = useState(false);
+
+
+  const [newExperience, setNewExperience] = useState({
+      title: '', company: '', duration: '', location: '', type: 'Full-time', description: '', technologies: []
+    });
+    const [newSkill, setNewSkill] = useState('');
+    const [newProject, setNewProject] = useState({
+      name: '', description: '', status: 'In Progress', technologies: []
+    });
   const defaultUser = {
       fullName: "",
       currentPosition: "",
@@ -155,7 +164,7 @@ const ProfilePage = () => {
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center space-x-6">
             <img
-              src={userData.avatar}
+              src={userData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userData.fullName)}&background=10b981&color=fff`}
               alt={userData.fullNameame}
               className="w-20 h-20 rounded-full border-2 border-green-500"
             />
@@ -190,17 +199,17 @@ const ProfilePage = () => {
         {/* Stats */}
         <div className="flex space-x-8">
           <div>
-            <div className="text-2xl font-bold text-green-500">{userData.stats.connections}</div>
+            <div className="text-2xl font-bold text-green-500">{userData?.stats?.connections?.length || 0}</div>
             <div className="text-sm text-gray-400">Connections</div>
           </div>
-          <div>
+          {/* <div>
             <div className="text-2xl font-bold text-green-500">{userData.stats.profileViews}</div>
             <div className="text-sm text-gray-400">Profile Views</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-green-500">{userData.stats.responseRate}</div>
             <div className="text-sm text-gray-400">Response Rate</div>
-          </div>
+          </div> */}
         </div>
 
         {/* Skills Tags */}
@@ -416,7 +425,7 @@ const ProfilePage = () => {
                     <span className="text-white font-medium">{skill}</span>
                     <div className="flex items-center space-x-1">
                       <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                      <span className="text-sm text-gray-400">{Math.floor(Math.random() * 20) + 80}%</span>
+                      {/* <span className="text-sm text-gray-400">{Math.floor(Math.random() * 20) + 80}%</span> */}
                     </div>
                   </div>
                   <button
