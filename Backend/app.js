@@ -11,14 +11,7 @@ const friendRoutes = require('./routes/friendRouter');
 const postRoutes = require('./routes/postRouter');
 
 const PORT = process.env.PORT || 8080;
-app.use(
-  cors({
-    origin: "https://skill-sync-frontend-neon.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-  })
-);
-app.options('*', cors());
+app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 app.get('/', (req, res) => {
