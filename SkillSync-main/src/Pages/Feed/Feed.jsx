@@ -200,7 +200,7 @@ export default function Feed() {
             {p.image && (
               <div className=" h-110 flex flex-col  items-center justify-center overflow-hidden rounded-lg mt-2">
                 <img
-                  src={`https://skill-sync-two-zeta.vercel.app${p.image}`}
+                  src={`https://skill-sync-two-zeta.vercel.app/${p.image}`}
                   alt="Post"
                   className=" h-full object-fit"
                 />
