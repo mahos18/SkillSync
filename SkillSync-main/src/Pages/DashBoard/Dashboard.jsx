@@ -120,7 +120,7 @@ const Dashboard = () => {
         {activeTab === 'Home' && <Feed />}
         {activeTab === 'Connections' && <ConnectionsPage />}
         {activeTab === 'Connect Nearby' && < ConnectnearbyPage activeTab={activeTab} />}
-        {activeTab === 'Mock Interview' && < MockInterviewPage />}
+        {activeTab === 'Mock Interview' && <MockInterviewPage href="https://mock-interview-lemon-gamma.vercel.app"/>}
         {activeTab === 'Messages' && (
           <div className="p-6 text-gray-300">Your messages and conversations.</div>
         )}

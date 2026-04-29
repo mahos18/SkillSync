@@ -196,7 +196,7 @@ const OnboardingFlow = () => {
 
     try {
         const res = await axios.put(
-        "http://localhost:8080/auth/onboard", 
+        "https://skill-sync-two-zeta.vercel.app//auth/onboard", 
         cleanedData,
         {
             headers: {
@@ -260,7 +260,7 @@ const OnboardingFlow = () => {
 
       // 4. send to backend (adjust URL to match your server)
       const res = await axios.put(
-        "http://localhost:8080/auth/onboard", // or your chosen endpoint
+        "https://skill-sync-two-zeta.vercel.app//auth/onboard", // or your chosen endpoint
         payload,
         {
           headers: {

@@ -155,7 +155,7 @@ const ConnectNearbyPage = ({ activeTab, currentUserId }) => {
   const fetchNearbyUsers = async (location) => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/user/nearby', {
+      const response = await fetch('https://skill-sync-two-zeta.vercel.app//user/nearby', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -180,7 +180,7 @@ const ConnectNearbyPage = ({ activeTab, currentUserId }) => {
   // Connect with user
   const handleConnect = async (userId) => {
     try {
-      const response = await fetch('http://localhost:8080/friend-request/send', {
+      const response = await fetch('https://skill-sync-two-zeta.vercel.app//friend-request/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

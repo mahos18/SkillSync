@@ -7,7 +7,7 @@ import { LoaderCircle } from 'lucide-react'
 
 const AuthPages = () => {
   const navigate = useNavigate();
-  const API = "http://localhost:8080/auth";
+  const API = "https://skill-sync-two-zeta.vercel.app//auth";
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

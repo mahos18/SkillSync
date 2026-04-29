@@ -16,7 +16,7 @@ export default function Feed() {
   const fetchPosts = useCallback(async (cursor = null) => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:8080/post/feed", {
+      const res = await axios.get("https://skill-sync-two-zeta.vercel.app//post/feed", {
         headers: { Authorization: `Bearer ${token}` },
         params: cursor ? { cursor } : {}
       });
@@ -61,7 +61,7 @@ export default function Feed() {
       console.log(formData)
 
       const res = await axios.post(
-        "http://localhost:8080/post/add",
+        "https://skill-sync-two-zeta.vercel.app//post/add",
         formData,
         {
           headers: {
@@ -200,7 +200,7 @@ export default function Feed() {
             {p.image && (
               <div className=" h-110 flex flex-col  items-center justify-center overflow-hidden rounded-lg mt-2">
                 <img
-                  src={`http://localhost:8080${p.image}`}
+                  src={`https://skill-sync-two-zeta.vercel.app/${p.image}`}
                   alt="Post"
                   className=" h-full object-fit"
                 />
