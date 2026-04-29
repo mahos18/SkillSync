@@ -10,7 +10,7 @@ import { useUser } from '../../../context/UserContext';
 import { LoaderCircle } from 'lucide-react'
 import UserProfilePopup from './UserProfilePopup';
 
-const API_BASE = 'https://skill-sync-two-zeta.vercel.app/';
+const API_BASE = 'https://skill-sync-two-zeta.vercel.app';
 
 const ConnectionsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');

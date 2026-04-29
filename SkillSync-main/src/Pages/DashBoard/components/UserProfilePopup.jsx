@@ -174,7 +174,7 @@ const UserProfilePopup = ({ userId, isOpen, onClose, currentUserId }) => {
   const fetchUser = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`https://skill-sync-two-zeta.vercel.app//user/${userId}`);
+      const res = await axios.get(`https://skill-sync-two-zeta.vercel.app/user/${userId}`);
       if (res.data.success && res.data.user) {
         const user = res.data.user;
         setUserProfile({
